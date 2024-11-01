@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de CURP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Color de fondo claro */
+            color: #333; /* Color de texto oscuro */
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #007bff; /* Color azul para el título */
+            text-align: center;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #007bff; /* Bordes azules */
+            border-radius: 5px;
+            resize: none; /* Evitar que el área de texto se redimensione */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #007bff; /* Color azul para el botón */
+            color: white; /* Texto blanco */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px; /* Espaciado entre botones */
+        }
+        button:hover {
+            background-color: #0056b3; /* Color azul más oscuro al pasar el mouse */
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+            background-color: white; /* Fondo blanco para la tabla */
+            border-radius: 5px;
+            overflow: hidden; /* Para bordes redondeados */
+        }
+        th, td {
+            border: 1px solid #007bff; /* Bordes azules */
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff; /* Encabezado azul */
+            color: white; /* Texto blanco en encabezados */
+        }
+    </style>
+</head>
+<body>
+    <h1>Analizador de CURP</h1>
+    <textarea id="curp" placeholder="Ingresa tu CURP"></textarea>
+    <div class="button-container">
+        <button onclick="analizarCurp()">Analizar</button>
+        <button onclick="borrarCurp()">Borrar</button>
+    </div>
+    <table id="resultados">
+        <thead>
+            <tr>
+                <th>Token</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se agregarán los resultados de los análisis -->
+        </tbody>
+    </table>
+    <div id="mensaje" style="text-align: center; margin-top: 20px;"></div>
+    <script>
+        function analizarCurp() {
+            const curp = document.getElementById("curp").value;
+            fetch('/analizar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ curp: curp })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#resultados tbody');
+                tbody.innerHTML = ''; // Limpiar la tabla de resultados
+                data.tokens.forEach(token => {
+                    const row = `<tr><td>${token.value}</td><td>${token.type}</td></tr>`;
+                    tbody.innerHTML += row;
+                });
+                // Agregar el total de tokens
+                const totalTokens = data.tokens.length;
+                const totalRow = `<tr><td><strong>Total Tokens</strong></td><td><strong>${totalTokens}</strong></td></tr>`;
+                tbody.innerHTML += totalRow;
+                document.getElementById('mensaje').textContent = data.message;
+            });
+        }
+
+        function borrarCurp() {
+            document.getElementById('curp').value = '';
+            const tbody = document.querySelector('#resultados tbody');
+            tbody.innerHTML = ''; // eliminar todas las filas de la tabla
+            document.getElementById('mensaje').textContent = '';
+        }
+    </script>
+</body>
+</html>
