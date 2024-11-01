@@ -1,0 +1,111 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> curp
+Rule 1     curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO
+
+Terminals, with rules where they appear
+
+ANIO                 : 1
+CONSTANTES           : 1
+DIA                  : 1
+ESTADO               : 1
+MES                  : 1
+NOMBRE               : 1
+PRIMER_APELLIDO      : 1
+RENAPO               : 1
+SEGUNDO_APELLIDO     : 1
+SEXO                 : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+curp                 : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . curp
+    (1) curp -> . PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO
+
+    PRIMER_APELLIDO shift and go to state 2
+
+    curp                           shift and go to state 1
+
+state 1
+
+    (0) S' -> curp .
+
+
+
+state 2
+
+    (1) curp -> PRIMER_APELLIDO . SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO
+
+    SEGUNDO_APELLIDO shift and go to state 3
+
+
+state 3
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO . NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO
+
+    NOMBRE          shift and go to state 4
+
+
+state 4
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE . ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO
+
+    ANIO            shift and go to state 5
+
+
+state 5
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO . MES DIA SEXO ESTADO CONSTANTES RENAPO
+
+    MES             shift and go to state 6
+
+
+state 6
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES . DIA SEXO ESTADO CONSTANTES RENAPO
+
+    DIA             shift and go to state 7
+
+
+state 7
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA . SEXO ESTADO CONSTANTES RENAPO
+
+    SEXO            shift and go to state 8
+
+
+state 8
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO . ESTADO CONSTANTES RENAPO
+
+    ESTADO          shift and go to state 9
+
+
+state 9
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO . CONSTANTES RENAPO
+
+    CONSTANTES      shift and go to state 10
+
+
+state 10
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES . RENAPO
+
+    RENAPO          shift and go to state 11
+
+
+state 11
+
+    (1) curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO .
+
+    $end            reduce using rule 1 (curp -> PRIMER_APELLIDO SEGUNDO_APELLIDO NOMBRE ANIO MES DIA SEXO ESTADO CONSTANTES RENAPO .)
+
